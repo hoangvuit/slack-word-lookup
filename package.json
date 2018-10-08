@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Vu Duong",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
@@ -21,5 +18,11 @@
     "oxford-dictionary-api": "^1.0.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.5"
+  },
+  "engines": {
+    "node": "4.1.1"
+  },
+  "scripts": {
+    "start" : "node src/server.js"
   }
 }
