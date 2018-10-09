@@ -6,7 +6,8 @@ const slashCommandFactory = require("./slash-command");
 const app = new Express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const { SLACK_TOKEN: slackToken, PORT } = process.env;
+const slackToken = process.env.SLACK_TOKEN;
+const PORT = process.env.PORT;
 
 if (!slackToken) {
   console.error("missing environment variables SLACK_TOKEN");
