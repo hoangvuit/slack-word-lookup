@@ -1,7 +1,10 @@
 const Express = require("express");
 const bodyParser = require("body-parser");
+const path = require('path');
+
 const lookupWord = require("./word-lookup");
 const slashCommandFactory = require("./slash-command");
+
 
 const app = new Express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -24,6 +27,15 @@ app.post("/", (req, res) => {
       return res.json(result);
     })
     .catch(console.error);
+});
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+app.get('/assets/stylesheets/:file', function(req, res) {
+  res.contentType('text/css');
+  res.sendFile(path.join(__dirname + '/assets/stylesheets/' + req.params.file));
 });
 
 app.listen(port, () => {
