@@ -42,7 +42,7 @@ const slashCommandFactory = (lookupWord, slackToken) => body =>
       });
     }
 
-    const { text: word } = body;
+    const word = body.text;
 
     lookupWord(word).then(result => {
       if (result.length == 0) {
