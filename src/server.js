@@ -1,6 +1,7 @@
 const Express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
+const request = require('request');
 
 const lookupWord = require("./word-lookup");
 const slashCommandFactory = require("./slash-command");
