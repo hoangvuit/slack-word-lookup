@@ -54,7 +54,7 @@ app.get("/auth/redirect", (req, res) => {
         .end();
     } else {
       console.log(JSONresponse);
-      res.send("Success!");
+      res.sendFile(path.join(__dirname + "/auth-success.html"));
     }
   });
 });
