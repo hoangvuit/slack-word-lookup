@@ -1,10 +1,9 @@
 const Express = require("express");
 const bodyParser = require("body-parser");
-const path = require('path');
+const path = require("path");
 
 const lookupWord = require("./word-lookup");
 const slashCommandFactory = require("./slash-command");
-
 
 const app = new Express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,13 +28,41 @@ app.post("/", (req, res) => {
     .catch(console.error);
 });
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname + "/index.html"));
 });
 
-app.get('/assets/stylesheets/:file', function(req, res) {
-  res.contentType('text/css');
-  res.sendFile(path.join(__dirname + '/assets/stylesheets/' + req.params.file));
+app.get("/auth/redirect", (req, res) => {
+  var options = {
+    uri:
+      "https://slack.com/api/oauth.access?code=" +
+      req.query.code +
+      "&client_id=" +
+      process.env.CLIENT_ID +
+      "&client_secret=" +
+      process.env.CLIENT_SECRET +
+      "&redirect_uri=" +
+      process.env.REDIRECT_URI,
+    method: "GET"
+  };
+  request(options, (error, response, body) => {
+    var JSONresponse = JSON.parse(body);
+    if (!JSONresponse.ok) {
+      console.log(JSONresponse);
+      res
+        .send("Error encountered: \n" + JSON.stringify(JSONresponse))
+        .status(200)
+        .end();
+    } else {
+      console.log(JSONresponse);
+      res.send("Success!");
+    }
+  });
+});
+
+app.get("/assets/stylesheets/:file", function(req, res) {
+  res.contentType("text/css");
+  res.sendFile(path.join(__dirname + "/assets/stylesheets/" + req.params.file));
 });
 
 app.listen(port, () => {
